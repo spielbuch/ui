@@ -1,6 +1,8 @@
 <template name="story">
-    {{#if loggedIn}}
-        {{{story}}}
+    {{#if currentUser}}
+        {{#each story}}
+            {{{text}}}
+        {{/each}}
     {{else}}
         Bitte melden Sie sich an.
     {{/if}}
