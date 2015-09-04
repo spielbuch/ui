@@ -25,6 +25,8 @@ Package.onUse(function (api) {
     ]);
 
     api.addFiles('reader.js', 'client');
+    api.addFiles('startup.js', ['server', 'client']);
+
     api.addFiles('view/story.html', 'client');
     api.addFiles('view/story.js', 'client');
     api.addFiles('utilities.js', 'client');

@@ -1,37 +1,47 @@
-Reader = {};
 
-Reader.update = function () {
+Reader = {};
+Reader.init = function () {
     if (!Spielebuch) {
-        console.error(500, 'Please install package spielebuch:core by typing \'meteor add spielebuch:core\' into your console.');
+        Spielebuch.error(500, 'Please install package spielebuch:core by typing \'meteor add spielebuch:core\' into your console.');
+        Session.set('readerText', '');
         return false;
     }
-    Session.set('text', Reader.parseKeywordText(Spielebuch.getText()));
-    return Reader.parseKeywordText(Spielebuch.getText());
+    Reader.autoupdate();
+    return true;
+};
+
+Reader.autoupdate = function () {
+    Tracker.autorun(function () {
+        if(Session.get('spielebuchReady')){
+            var text = Reader.parseKeywordText(Session.get('spielebuchText'));
+            console.log(text);
+            Session.set('readerText', text);
+        }
+    });
 };
 
 Reader.parseKeywordText = function (textarray) {
-    var re = /[^[\]]+(?=])/, _ids = [];
+    var re = /[^[\]]+(?=])/, _id, gameobject, text = '';
     if (Array.isArray(textarray)) {
-        _.map(textarray, function (text) {
-            _ids = re.exec(text);
-            console.log(text);
-            console.log(_ids);
-            _.forEach(_ids, function (_id) {
-                var gameobject = Spielebuch.Gameobjects.findOne(_id);
+        _.map(textarray, function (textitem) {
+            var foundObject = re.exec(textitem);
+            if (foundObject !== null) {
+                _id = foundObject[0];
+                gameobject = Spielebuch.Gameobjects.findOne(_id);
                 if (!gameobject) {
-                    console.error('404', 'Could not find Gameobject ('+_id+') in database.');
-                    return;
+                    Spielebuch.error('404', 'Could not find Gameobject (' + _id + ') in database.');
+                }else {
+                    textitem = textitem.replace(new RegExp('\\[' + _id + '\\]', 'g'),
+                        '<a href=\"#\" class=\"keyword hover\" ' +
+                        'data-_id=\"' + _id + '\">' + gameobject.name +
+                        '</a>'
+                    );
                 }
-                text = text.replace(new RegExp('\\[' + _id + '\\]', 'g'),
-                    '<a href=\"#\" class=\"keyword hover\" ' +
-                    'data-_id=\"' + _id + '\">' + gameobject.name +
-                    '</a>'
-                );
-            });
-            return text + ' ';
+            }
+            text += textitem + ' ';
         });
-        return textarray;
+        return text;
     }
-    console.error(500, 'Spielebuch.getText() should return an array, but instead returned a ' + typeof textarray + '.');
-    return [];
+    Spielebuch.error(500, 'Spielebuch.getText() should return an array, but instead returned a ' + typeof textarray + '.');
+    return '';
 };

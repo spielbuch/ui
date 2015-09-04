@@ -1,18 +1,15 @@
-
-
 Template.story.events({
 });
 
 Template.story.helpers({
-    story: function(){
-        if(Session.get('playingScene')===-1) {
-            return ['Loading...'];
+    text: function(){
+        if(Session.get('readerText')===undefined){
+            return 'You did not initilize the Reader. '+
+                '<br/>You can do this by calling Reader.init().';
         }
-        if(Session.get('playingScene')===undefined){
-            return ['Please install package spielebuch:core.',
-                '<br/>To do this type: \'meteor add spielebuch:core\' into your console.'];
+        if(Session.get('readerText')===-1) {
+            return 'Loading...';
         }
-        Reader.update();
-        return Session.get('text');
+        return Session.get('readerText');
     }
 });
