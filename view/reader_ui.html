@@ -1,0 +1,28 @@
+<template name="readerText">
+    {{#if currentUser}}
+    {{{readerText}}}
+    {{else}}
+    Bitte melden Sie sich an.
+    {{/if}}
+</template>
+<template name="readerObjectProperties">
+    {{#if readerObjectProperties}}
+    <ul>
+        {{#each readerObjectProperties}}
+            {{key}}:{{value}}
+        {{/each}}
+    </ul>
+    {{/if}}
+</template>
+<template name="readerObjectEffectNames">
+    {{#if readerObjectEffectNames}}
+    <ul class="reader-effectnames">
+        {{#each readerObjectEffectNames}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    {{/if}}
+</template>
+<template name="readerInteraction">
+    {{{readerRenderIcons}}}
+</template>

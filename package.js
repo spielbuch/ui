@@ -11,24 +11,28 @@ Package.onUse(function (api) {
     api.use([
         'meteor-platform',
         'underscore',
-        'session',
         'spielebuch:core',
         'accounts-base',
         'accounts-ui'
     ]);
+    api.use(['templating',
+        'session'
+    ], 'client');
 
     api.imply([
         'meteor-platform',
         'spielebuch:core',
-        'twbs:bootstrap',
         'fortawesome:fontawesome'
     ]);
 
     api.addFiles('reader.js', 'client');
     api.addFiles('startup.js', ['server', 'client']);
 
-    api.addFiles('view/story.html', 'client');
-    api.addFiles('view/story.js', 'client');
+    api.addFiles('view/reader_ui.html', 'client');
+    api.addFiles('view/reader_ui.js', 'client');
+    api.addFiles('view/reader_ui.css', 'client');
+    api.addFiles('view/reader_ui_global_helper.js', 'client');
+
     api.addFiles('utilities.js', 'client');
 
     if (api.export) {
