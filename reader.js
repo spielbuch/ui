@@ -31,10 +31,12 @@ Reader.init = function () {
 
 Reader.autoupdate = function () {
     Tracker.autorun(function () {
-        if (Session.get('spielebuchReady')) {
+        if (Session.equals('spielebuchReady', true)) {
             var text = Reader.parseGameobjectText(Session.get('spielebuchText'));
-            console.log(text);
             Session.set('readerText', text);
+            Reader.resetAvtiveGameobject();
+        }else{
+            Session.set('readerText', -1);
         }
     });
 };
@@ -139,4 +141,8 @@ Reader.renderCloseIcon = function(degree){
         '<i class=\"fa fa-close fa-stack-1x fa-inverse\"></i>' +
         '</span>' +
         '</a>';
+};
+
+Reader.modal = function(msg){
+    console.log(msg);
 }

@@ -35,7 +35,7 @@ Template.readerInteraction.events({
         event.preventDefault();
         var fncId = event.currentTarget.dataset.fncid;
         if(fncId) {
-            Spielebuch.StoredFunction.execute(fncId)
+            Spielebuch.StoredFunction.execute(fncId, Session.get('readerObjectId'));
         }
     },
     'click .reader-close': function(){
