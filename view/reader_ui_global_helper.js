@@ -47,6 +47,26 @@ Template.registerHelper('readerObjectName', function () {
 Template.registerHelper('readerObjectId', function () {
     return Session.get('readerObjectId');
 });
+
 Template.registerHelper('readerRenderIcons', function () {
     return Session.get('readerRenderIcons');
+});
+
+Template.registerHelper('readerPlayerProperties', function () {
+    return Session.get('readerPlayerProperties');
+});
+Template.registerHelper('readerPlayerEffectNames', function () {
+    return Session.get('readerPlayerEffectNames');
+});
+Template.registerHelper('readerPlayerEffects', function () {
+    return Session.get('readerPlayerEffects');
+});
+Template.registerHelper('readerPlayerRules', function () {
+    return Session.get('readerPlayerRules');
+});
+Template.registerHelper('readerPlayerName', function () {
+    return Session.get('readerPlayerName');
+});
+Template.registerHelper('readerPlayerId', function () {
+    return Session.get('readerPlayerId');
 });

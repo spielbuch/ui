@@ -20,6 +20,24 @@
 
 Reader = {};
 Reader.init = function () {
+
+    Session.setDefault('readerObjectProperties', false);
+    Session.setDefault('readerObjectEffectNames', false);
+    Session.setDefault('readerObjectEffects', false);
+    Session.setDefault('readerObjectRules', false);
+    Session.setDefault('readerObjectName', false);
+    Session.setDefault('readerObjectId', false);
+
+    Session.setDefault('readerRenderIcons', '');
+
+    Session.setDefault('readerPlayerProperties', false);
+    Session.setDefault('readerPlayerEffectNames', false);
+    Session.setDefault('readerPlayerEffects', false);
+    Session.setDefault('readerPlayerRules', false);
+    Session.setDefault('readerPlayerName', 'Noname');
+    Session.setDefault('readerPlayerId', false);
+
+
     if (!Spielebuch) {
         Spielebuch.error(500, 'Please install package spielebuch:core by typing \'meteor add spielebuch:core\' into your console.');
         Session.set('readerText', '');
@@ -30,14 +48,27 @@ Reader.init = function () {
 };
 
 Reader.autoupdate = function () {
+    Reader.refreshPlayerData();
     Tracker.autorun(function () {
         if (Session.equals('spielebuchReady', true)) {
             var text = Reader.parseGameobjectText(Session.get('spielebuchText'));
             Session.set('readerText', text);
             Reader.resetAvtiveGameobject();
-        }else{
+        } else {
             Session.set('readerText', -1);
         }
+    });
+};
+
+Reader.refreshPlayerData = function () {
+    Tracker.autorun(function () {
+        var player = new Player(Meteor.userId());
+        Session.set('readerPlayerProperties', player.getPropertiesArray());
+        Session.set('readerPlayerEffectNames', player.getEffectNames());
+        Session.set('readerPlayerEffects', player.getEffects());
+        Session.set('readerPlayerRules', player.getRules());
+        Session.set('readerPlayerName', player.get('name'));
+        Session.set('readerPlayerId', player.get('_id'));
     });
 };
 
@@ -77,15 +108,6 @@ Reader.setActiveGameobject = function (_id) {
     Session.set('readerObjectName', gameobject.get('name'));
     Session.set('readerObjectId', gameobject.get('_id'));
 };
-Reader.initActiveGameobject = function () {
-    Session.setDefault('readerObjectProperties', false);
-    Session.setDefault('readerObjectEffectNames', false);
-    Session.setDefault('readerObjectEffects', false);
-    Session.setDefault('readerObjectRules', false);
-    Session.setDefault('readerObjectName', false);
-    Session.setDefault('readerObjectId', false);
-    Session.setDefault('readerRenderIcons', '');
-}
 Reader.resetAvtiveGameobject = function () {
     Session.set('readerObjectProperties', false);
     Session.set('readerObjectEffectNames', false);
@@ -102,7 +124,7 @@ Reader.getActiveGameobject = function () {
         return gameobject;
     }
     return false;
-}
+};
 
 Reader.localStorage = new Mongo.Collection(null);
 
@@ -118,10 +140,9 @@ Reader.renderIcons = function (position) {
         });
         html += Reader.renderCloseIcon(degree + offset / 2);
         html += '</div>';
-        html;
     }
     Session.set('readerRenderIcons', html);
-}
+};
 
 Reader.renderIcon = function (eventObject, degree) {
     return '<a href=\"#\" style=\"transform: rotate(' + degree + 'deg) translate(35px) rotate(-' + degree + 'deg);\"' +
@@ -133,7 +154,7 @@ Reader.renderIcon = function (eventObject, degree) {
         '</a>';
 };
 
-Reader.renderCloseIcon = function(degree){
+Reader.renderCloseIcon = function (degree) {
     return '<a href=\"#\" style=\"transform: rotate(' + degree + 'deg) translate(35px) rotate(-' + degree + 'deg);\"' +
         ' class=\"reader-close\" title=\"Close\">' +
         '<span class=\"fa-stack fa-lg\">' +
@@ -143,6 +164,6 @@ Reader.renderCloseIcon = function(degree){
         '</a>';
 };
 
-Reader.modal = function(msg){
+Reader.modal = function (msg) {
     console.log(msg);
-}
+};
