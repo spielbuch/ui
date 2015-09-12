@@ -21,6 +21,8 @@
 Reader = {};
 Reader.init = function () {
 
+    Session.setDefault('readerText', '');
+
     Session.setDefault('readerObjectProperties', false);
     Session.setDefault('readerObjectEffectNames', false);
     Session.setDefault('readerObjectEffects', false);
@@ -38,10 +40,9 @@ Reader.init = function () {
     Session.setDefault('readerPlayerId', false);
 
 
-    if (!Spielebuch) {
-        Spielebuch.error(500, 'Please install package spielebuch:core by typing \'meteor add spielebuch:core\' into your console.');
-        Session.set('readerText', '');
-        return false;
+    if(!Spielebuch){
+        throw new Meteor.Error(500, 'Please add package spielebuch:core to your application.');
+        return;
     }
     Reader.autoupdate();
     return true;
@@ -55,14 +56,17 @@ Reader.autoupdate = function () {
             Session.set('readerText', text);
             Reader.resetAvtiveGameobject();
         } else {
-            Session.set('readerText', -1);
+            Session.set('readerText', '');
         }
     });
 };
 
 Reader.refreshPlayerData = function () {
     Tracker.autorun(function () {
-        var player = new Player(Meteor.userId());
+        if(!Meteor.userId()){
+            return;
+        }
+        var player = new Spielebuch.Player(Meteor.userId());
         Session.set('readerPlayerProperties', player.getPropertiesArray());
         Session.set('readerPlayerEffectNames', player.getEffectNames());
         Session.set('readerPlayerEffects', player.getEffects());
@@ -99,7 +103,10 @@ Reader.parseGameobjectText = function (textarray) {
 };
 
 Reader.setActiveGameobject = function (_id) {
-    var gameobject = new Spielebuch.Gameobject();
+    if(!Meteor.userId()){
+        return;
+    }
+    var gameobject = new Spielebuch.Gameobject(Meteor.userId());
     gameobject.load(_id);
     Session.set('readerObjectProperties', gameobject.getPropertiesArray());
     Session.set('readerObjectEffectNames', gameobject.getEffectNames());
@@ -118,8 +125,11 @@ Reader.resetAvtiveGameobject = function () {
     Session.set('readerRenderIcons', '');
 };
 Reader.getActiveGameobject = function () {
+    if(!Meteor.userId()){
+        return false;
+    }
     if (Session.get('readerObjectId')) {
-        var gameobject = new Spielebuch.Gameobject();
+        var gameobject = new Spielebuch.Gameobject(Meteor.userId());
         gameobject.load(Session.get('readerObjectId'));
         return gameobject;
     }
