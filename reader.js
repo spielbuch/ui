@@ -40,7 +40,7 @@ Reader.init = function () {
     Session.setDefault('readerPlayerId', false);
 
 
-    if(!Spielebuch){
+    if (!Spielebuch) {
         throw new Meteor.Error(500, 'Please add package spielebuch:core to your application.');
         return;
     }
@@ -63,7 +63,7 @@ Reader.autoupdate = function () {
 
 Reader.refreshPlayerData = function () {
     Tracker.autorun(function () {
-        if(!Meteor.userId()){
+        if (!Meteor.userId()) {
             return;
         }
         var player = new Spielebuch.Player(Meteor.userId());
@@ -103,7 +103,7 @@ Reader.parseGameobjectText = function (textarray) {
 };
 
 Reader.setActiveGameobject = function (_id) {
-    if(!Meteor.userId()){
+    if (!Meteor.userId()) {
         return;
     }
     var gameobject = new Spielebuch.Gameobject(Meteor.userId());
@@ -125,7 +125,7 @@ Reader.resetAvtiveGameobject = function () {
     Session.set('readerRenderIcons', '');
 };
 Reader.getActiveGameobject = function () {
-    if(!Meteor.userId()){
+    if (!Meteor.userId()) {
         return false;
     }
     if (Session.get('readerObjectId')) {
@@ -174,6 +174,7 @@ Reader.renderCloseIcon = function (degree) {
         '</a>';
 };
 
+
 Reader.modal = function (msg) {
-    console.log(msg);
+    sAlert.info(msg, {html: true, position: 'top', offset: '100px'});
 };

@@ -33,7 +33,8 @@ Package.onUse(function (api) {
         'underscore',
         'spielebuch:core',
         'accounts-base',
-        'accounts-ui'
+        'accounts-ui',
+        'juliancwirko:s-alert'
     ]);
     api.use(['templating',
         'session'
@@ -41,7 +42,8 @@ Package.onUse(function (api) {
 
     api.imply([
         'spielebuch:core',
-        'fortawesome:fontawesome'
+        'fortawesome:fontawesome',
+        'juliancwirko:s-alert'
     ]);
 
     api.addFiles('reader.js', 'client');
@@ -51,7 +53,6 @@ Package.onUse(function (api) {
     api.addFiles('view/reader_ui.css', 'client');
     api.addFiles('view/reader_ui_global_helper.js', 'client');
 
-    api.addFiles('utilities.js', 'client');
 
     if (api.export) {
         api.export('Reader', 'client');
