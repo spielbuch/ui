@@ -42,8 +42,7 @@ Package.onUse(function (api) {
 
     api.imply([
         'spielebuch:core',
-        'fortawesome:fontawesome',
-        'juliancwirko:s-alert'
+        'fortawesome:fontawesome'
     ]);
 
     api.addFiles('reader.js', 'client');
