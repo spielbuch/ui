@@ -156,7 +156,7 @@ Reader.renderIcons = function (position) {
 
 Reader.renderIcon = function (eventObject, degree) {
     return '<a href=\"#\" style=\"transform: rotate(' + degree + 'deg) translate(35px) rotate(-' + degree + 'deg);\"' +
-        ' class=\"reader-event\" data-fncid=\"' + eventObject.fncId + '\" title=\"' + eventObject.name + '\">' +
+        ' class=\"reader-event\" data-fncid=\"' + eventObject.fncId + '\" data-eventname=\"' + eventObject.name + '\" title=\"' + eventObject.name + '\">' +
         '<span class=\"fa-stack fa-lg\">' +
         '<i class=\"fa fa-circle fa-stack-2x\"></i>' +
         '<i class=\"fa ' + eventObject.icon + ' fa-stack-1x fa-inverse\"></i>' +

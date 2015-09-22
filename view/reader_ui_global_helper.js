@@ -33,7 +33,12 @@ Template.registerHelper('readerObjectProperties', function () {
     return Session.get('readerObjectProperties');
 });
 Template.registerHelper('readerObjectEffectNames', function () {
-    return Session.get('readerObjectEffectNames');
+    /**
+     * We do not want to disply default effects, so we filter the array:
+     */
+    return _.filter(Session.get('readerObjectEffectNames'), function (name) {
+        return name !== 'default';
+    });
 });
 Template.registerHelper('readerObjectEffects', function () {
     return Session.get('readerObjectEffects');
@@ -69,4 +74,8 @@ Template.registerHelper('readerPlayerName', function () {
 });
 Template.registerHelper('readerPlayerId', function () {
     return Session.get('readerPlayerId');
+});
+
+Template.registerHelper('readerCopyrightNotice', function () {
+    return Spielebuch.copyrightNotice;
 });

@@ -33,8 +33,9 @@ Template.readerText.events({
 Template.readerInteraction.events({
     'click .reader-event': function(event){
         event.preventDefault();
-        var fncId = event.currentTarget.dataset.fncid;
+        var fncId = event.currentTarget.dataset.fncid, eventName = event.currentTarget.dataset.eventname;;
         if(fncId) {
+            Spielebuch.print('event',Session.get('readerPlayerName'),eventName,Session.get('readerObjectName'))
             Spielebuch.StoredFunction.execute(fncId, Session.get('readerObjectId'));
         }
     },
