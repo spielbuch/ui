@@ -33,8 +33,7 @@ Package.onUse(function (api) {
         'underscore',
         'spielebuch:core',
         'accounts-base',
-        'accounts-ui',
-        'juliancwirko:s-alert'
+        'accounts-ui'
     ]);
     api.use(['templating',
         'session'
