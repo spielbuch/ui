@@ -45,3 +45,11 @@ Template.readerInteraction.events({
 });
 
 
+Template.trailerModal.helpers({
+    text: function(){
+        return Session.get('modalText');
+    } ,
+    title: function(){
+        return Session.get('modalTitle');
+    }
+});

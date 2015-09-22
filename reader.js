@@ -175,6 +175,8 @@ Reader.renderCloseIcon = function (degree) {
 };
 
 
-Reader.modal = function (msg) {
-    sAlert.info(msg, {html: true, position: 'top', offset: '100px'});
+Reader.modal = function(text, title){
+    Session.set('modalText',text);
+    Session.set('modalTitle',title);
+    $('#modal-trailer').modal();
 };
