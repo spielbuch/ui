@@ -66,7 +66,6 @@ Reader.refreshPlayerData = function () {
         if (!Meteor.userId()) {
             return;
         }
-        var player = new Spielebuch.Player(Meteor.userId());
         Session.set('readerPlayerProperties', player.getPropertiesArray());
         Session.set('readerPlayerEffectNames', player.getEffectNames());
         Session.set('readerPlayerEffects', player.getEffects());
@@ -102,12 +101,15 @@ Reader.parseGameobjectText = function (textarray) {
     return '';
 };
 
+Reader.activeGameobject = new ReactiveVar(false);
+
 Reader.setActiveGameobject = function (_id) {
     if (!Meteor.userId()) {
         return;
     }
     var gameobject = new Spielebuch.Gameobject(Meteor.userId());
     gameobject.load(_id);
+    Reader.activeGameobject.set(gameobject);
     Session.set('readerObjectProperties', gameobject.getPropertiesArray());
     Session.set('readerObjectEffectNames', gameobject.getEffectNames());
     Session.set('readerObjectEffects', gameobject.getEffects());
@@ -115,7 +117,8 @@ Reader.setActiveGameobject = function (_id) {
     Session.set('readerObjectName', gameobject.get('name'));
     Session.set('readerObjectId', gameobject.get('_id'));
 };
-Reader.resetAvtiveGameobject = function () {
+Reader.resetActiveGameobject = function () {
+    Reader.activeGameobject.set(false);
     Session.set('readerObjectProperties', false);
     Session.set('readerObjectEffectNames', false);
     Session.set('readerObjectEffects', false);
@@ -124,55 +127,12 @@ Reader.resetAvtiveGameobject = function () {
     Session.set('readerObjectId', false);
     Session.set('readerRenderIcons', '');
 };
-Reader.getActiveGameobject = function () {
-    if (!Meteor.userId()) {
-        return false;
-    }
-    if (Session.get('readerObjectId')) {
-        var gameobject = new Spielebuch.Gameobject(Meteor.userId());
-        gameobject.load(Session.get('readerObjectId'));
-        return gameobject;
-    }
-    return false;
-};
-
 Reader.localStorage = new Mongo.Collection(null);
 
-Reader.renderIcons = function (position) {
-    var gameobject = Reader.getActiveGameobject(), html = '', degree = 0, events = [], offset;
-    if (gameobject) {
-        html += '<div style="top: ' + position.y + 'px;left:' + position.x + 'px\" class=\"icons-container\">';
-        events = gameobject.getEvents();
-        offset = 360 / (events.length + 1); //+1 because we add a close icon.
-        _.each(events, function (eventObject) {
-            html += Reader.renderIcon(eventObject, degree + offset / 2);
-            degree += offset;
-        });
-        html += Reader.renderCloseIcon(degree + offset / 2);
-        html += '</div>';
-    }
-    Session.set('readerRenderIcons', html);
-};
-
-Reader.renderIcon = function (eventObject, degree) {
-    return '<a href=\"#\" style=\"transform: rotate(' + degree + 'deg) translate(35px) rotate(-' + degree + 'deg);\"' +
-        ' class=\"reader-event\" data-fncid=\"' + eventObject.fncId + '\" data-eventname=\"' + eventObject.name + '\" title=\"' + eventObject.name + '\">' +
-        '<span class=\"fa-stack fa-lg\">' +
-        '<i class=\"fa fa-circle fa-stack-2x\"></i>' +
-        '<i class=\"fa ' + eventObject.icon + ' fa-stack-1x fa-inverse\"></i>' +
-        '</span>' +
-        '</a>';
-};
-
-Reader.renderCloseIcon = function (degree) {
-    return '<a href=\"#\" style=\"transform: rotate(' + degree + 'deg) translate(35px) rotate(-' + degree + 'deg);\"' +
-        ' class=\"reader-close\" title=\"Close\">' +
-        '<span class=\"fa-stack fa-lg\">' +
-        '<i class=\"fa fa-circle fa-stack-2x text-danger\"></i>' +
-        '<i class=\"fa fa-close fa-stack-1x fa-inverse\"></i>' +
-        '</span>' +
-        '</a>';
-};
+Reader.getBackpack = function(){
+    var player = Spielebuch.player.get();
+    return player.getBackpackList();
+}
 
 
 Reader.modal = function(text, title){

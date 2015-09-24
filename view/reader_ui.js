@@ -18,6 +18,44 @@
  * along with spielebuch:ui. If not, see <http://www.gnu.org/licenses/>.
  */
 
+var renderIcons = function (position) {
+    Tracker.autorun(function(){
+        var gameobject = Reader.activeGameobject.get(), html = '', degree = 0, events = [], offset;
+        if (gameobject) {
+            html += '<div style="top: ' + position.y + 'px;left:' + position.x + 'px\" class=\"icons-container\">';
+            events = gameobject.getEvents();
+            offset = 360 / (events.length + 1); //+1 because we add a close icon.
+            _.each(events, function (eventObject) {
+                html += renderIcon(eventObject, degree + offset / 2);
+                degree += offset;
+            });
+            html += renderCloseIcon(degree + offset / 2);
+            html += '</div>';
+        }
+        Session.set('readerRenderIcons', html);
+    });
+};
+
+var renderIcon = function (eventObject, degree) {
+    return '<a href=\"#\" style=\"transform: rotate(' + degree + 'deg) translate(35px) rotate(-' + degree + 'deg);\"' +
+        ' class=\"reader-event\" data-fncid=\"' + eventObject.fncId + '\" data-eventname=\"' + eventObject.name + '\" title=\"' + eventObject.name + '\">' +
+        '<span class=\"fa-stack fa-lg\">' +
+        '<i class=\"fa fa-circle fa-stack-2x\"></i>' +
+        '<i class=\"fa ' + eventObject.icon + ' fa-stack-1x fa-inverse\"></i>' +
+        '</span>' +
+        '</a>';
+};
+
+var renderCloseIcon = function (degree) {
+    return '<a href=\"#\" style=\"transform: rotate(' + degree + 'deg) translate(35px) rotate(-' + degree + 'deg);\"' +
+        ' class=\"reader-close\" title=\"Close\">' +
+        '<span class=\"fa-stack fa-lg\">' +
+        '<i class=\"fa fa-circle fa-stack-2x text-danger\"></i>' +
+        '<i class=\"fa fa-close fa-stack-1x fa-inverse\"></i>' +
+        '</span>' +
+        '</a>';
+};
+
 Template.readerText.events({
     'click .reader-gameobject': function(event) {
         event.preventDefault();
@@ -27,15 +65,15 @@ Template.readerText.events({
         }
         var _id = event.currentTarget.dataset._id;
         Reader.setActiveGameobject(_id);
-        Reader.renderIcons({x: event.clientX, y: event.clientY});
+        renderIcons({x: event.clientX, y: event.clientY});
     }
 });
 Template.readerInteraction.events({
     'click .reader-event': function(event){
         event.preventDefault();
-        var fncId = event.currentTarget.dataset.fncid, eventName = event.currentTarget.dataset.eventname;;
+        var fncId = event.currentTarget.dataset.fncid, eventName = event.currentTarget.dataset.eventname;
         if(fncId) {
-            Spielebuch.print('event',Session.get('readerPlayerName'),eventName,Session.get('readerObjectName'))
+            Spielebuch.print('event',Session.get('readerPlayerName'),eventName,Session.get('readerObjectName'));
             Spielebuch.StoredFunction.execute(fncId, Session.get('readerObjectId'));
         }
     },
@@ -53,3 +91,15 @@ Template.trailerModal.helpers({
         return Session.get('modalTitle');
     }
 });
+
+/**
+ * Backpack
+ * every item in backpack has two events:
+ * - use: Element is used
+ * - drop: Element is dropped from backpack
+ */
+Template.readerBackpack.helper({
+    getBackpack: function(){
+        return Reader.getBackpack();
+    }
+})

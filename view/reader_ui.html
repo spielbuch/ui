@@ -47,6 +47,14 @@
 <template name="readerInteraction">
     {{{readerRenderIcons}}}
 </template>
+<template name="readerBackpack">
+    <ul>
+    {{#each getBackpack}}
+        <li></li>
+    {{/each}}
+        </ul>
+
+</template>
 
 <template name="modal">
     {{>trailerModal}}

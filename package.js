@@ -36,7 +36,8 @@ Package.onUse(function (api) {
         'accounts-ui'
     ]);
     api.use(['templating',
-        'session'
+        'session',
+        'reactive-var',
     ], 'client');
 
     api.imply([
