@@ -18,20 +18,19 @@
  * along with spielebuch:ui. If not, see <http://www.gnu.org/licenses/>.
  */
 renderIcons = function (position, events) {
-    Tracker.autorun(function(){
-        var html = '', degree = 0, offset;
-        if (Array.isArray(events)) {
-            html += '<div style="top: ' + position.y + 'px;left:' + position.x + 'px\" class=\"icons-container\">';
-            offset = 360 / (events.length + 1); //+1 because we add a close icon.
-            _.each(events, function (eventObject) {
-                html += renderIcon(eventObject, degree + offset / 2);
-                degree += offset;
-            });
-            html += renderCloseIcon(degree + offset / 2);
-            html += '</div>';
-        }
-        Session.set('readerRenderIcons', html);
-    });
+    console.log(events);
+    var html = '', degree = 0, offset;
+    if (Array.isArray(events)) {
+        html += '<div style="top: ' + position.y + 'px;left:' + position.x + 'px\" class=\"icons-container\">';
+        offset = 360 / (events.length + 1); //+1 because we add a close icon.
+        _.each(events, function (eventObject) {
+            html += renderIcon(eventObject, degree + offset / 2);
+            degree += offset;
+        });
+        html += renderCloseIcon(degree + offset / 2);
+        html += '</div>';
+    }
+    Session.set('readerRenderIcons', html);
 };
 
 renderIcon = function (eventObject, degree) {
@@ -55,15 +54,15 @@ renderCloseIcon = function (degree) {
 };
 
 Template.readerInteraction.events({
-    'click .reader-event': function(event){
+    'click .reader-event': function (event) {
         event.preventDefault();
         var fncId = event.currentTarget.dataset.fncid, eventName = event.currentTarget.dataset.eventname;
-        if(fncId) {
-            Spielebuch.print('event',Session.get('readerPlayerName'),eventName,Session.get('readerObjectName'));
+        if (fncId) {
+            Spielebuch.print('event', Session.get('readerPlayerName'), eventName, Session.get('readerObjectName'));
             Spielebuch.StoredFunction.execute(fncId, Session.get('readerObjectId'));
         }
     },
-    'click .reader-close': function(){
+    'click .reader-close': function () {
         Reader.resetActiveGameobject();
     }
 });

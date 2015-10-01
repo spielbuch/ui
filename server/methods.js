@@ -20,9 +20,11 @@
 Meteor.methods({
     createBackpackEventFunctions: function () {
         var drop = {
-            name: 'Drop'
+            name: 'Drop',
+            icon: 'fa-long-arrow-down'
         }, take = {
-            name: 'Equip'
+            name: 'Equip',
+            icon: 'fa-male'
         };
         /*drop.fncId = Spielebuch.StoredFunction.save(function(){
 

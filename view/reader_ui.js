@@ -20,13 +20,11 @@
 Template.readerText.events({
     'click .reader-gameobject': function (event) {
         event.preventDefault();
+        var _id = event.currentTarget.dataset._id;
         if (Session.get('readerObjectId') !== false) {
             Reader.resetActiveGameobject();
-            if (event.currentTarget.dataset._id === Session.get('readerObjectId')) {
-                return;
-            }
         }
-        var _id = event.currentTarget.dataset._id;
+
         var gameobject = Reader.setActiveGameobject(_id);
         renderIcons({x: event.clientX, y: event.clientY}, gameobject.getEvents());
     }

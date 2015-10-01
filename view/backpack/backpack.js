@@ -43,11 +43,10 @@
     Template.backpackModal.events({
         'click .reader-backpack-item': function (event) {
             event.preventDefault();
+            var _id = event.currentTarget.dataset._id;
             if (Session.get('readerObjectId') !== false) {
                 Reader.resetActiveGameobject();
-                return;
             }
-            var _id = event.currentTarget.dataset._id;
             Reader.setActiveGameobject(_id);
             renderIcons({x: event.clientX, y: event.clientY}, Reader.backpackEvents);
         }
@@ -61,10 +60,13 @@
         return [];
     };
 
-    Reader.backpackEvents = {};
+    Reader.backpackEvents = [];
     Meteor.startup(function () {
-        Meteor.call('createBackpackEventFunctions', function (events) {
-            backpackEvents = events;
+        Meteor.call('createBackpackEventFunctions', function (err, events) {
+            if(err ){
+                Spielebuch.error(500,err);
+            }
+            Reader.backpackEvents = events;
         })
     });
 
