@@ -21,7 +21,7 @@ Template.readerText.events({
     'click .reader-gameobject': function(event) {
         event.preventDefault();
         if(Session.get('readerObjectId')!==false){
-            Reader.resetAvtiveGameobject();
+            Reader.resetActiveGameobject();
             return;
         }
         var _id = event.currentTarget.dataset._id;
