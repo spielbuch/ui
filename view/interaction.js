@@ -64,6 +64,6 @@ Template.readerInteraction.events({
         }
     },
     'click .reader-close': function(){
-        Reader.resetAvtiveGameobject();
+        Reader.resetActiveGameobject();
     }
 });
