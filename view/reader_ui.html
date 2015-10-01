@@ -20,61 +20,40 @@
 
 <template name="readerText">
     {{#if currentUser}}
-    {{{readerText}}}
+    <div class="reader-text">{{{readerText}}}</div>
+    <div class="reader-backpack-btn">{{>readerBackpack}}</div>
     {{else}}
     Bitte melden Sie sich an.
     {{/if}}
     {{> modal}}
 </template>
+
 <template name="readerObjectProperties">
     {{#if readerObjectProperties}}
     <ul>
         {{#each readerObjectProperties}}
-            {{key}}:{{value}}
+        {{key}}: {{value}}
         {{/each}}
     </ul>
     {{/if}}
 </template>
+
 <template name="readerObjectEffectNames">
     {{#if readerObjectEffectNames}}
     <ul class="reader-effectnames">
         {{#each readerObjectEffectNames}}
-            <li>{{this}}</li>
+        <li>{{this}}</li>
         {{/each}}
     </ul>
     {{/if}}
 </template>
+
 <template name="readerInteraction">
     {{{readerRenderIcons}}}
 </template>
-<template name="readerBackpack">
-    <ul>
-    {{#each getBackpack}}
-        <li></li>
-    {{/each}}
-        </ul>
 
-</template>
 
-<template name="modal">
-    {{>trailerModal}}
-</template>
 
-<template name="trailerModal">
-    <div class="modal fade" id="modal-trailer">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">{{{title}}}</h4>
-                </div>
-                <div class="modal-body">
-                    {{{text}}}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Schlie&szlig;en</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
+
+
+

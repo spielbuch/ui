@@ -1,5 +1,5 @@
 /**
- * Created by Daniel Budick on 08 Sep 2015.
+ * Created by Daniel Budick on 01 Okt 2015.
  * Copyright 2015 Daniel Budick All rights reserved.
  * Contact: daniel@budick.eu / http://budick.eu
  *
@@ -17,17 +17,16 @@
  * You should have received a copy of the GNU General Public License
  * along with spielebuch:ui. If not, see <http://www.gnu.org/licenses/>.
  */
-Template.readerText.events({
-    'click .reader-gameobject': function(event) {
-        event.preventDefault();
-        if(Session.get('readerObjectId')!==false){
-            Reader.resetAvtiveGameobject();
-            return;
-        }
-        var _id = event.currentTarget.dataset._id;
-        var gameobject = Reader.setActiveGameobject(_id);
-        renderIcons({x: event.clientX, y: event.clientY},gameobject.getEvents());
+Meteor.methods({
+    createBackpackEventFunctions: function () {
+        var drop = {
+            name: 'Drop'
+        }, take = {
+            name: 'Equip'
+        };
+        /*drop.fncId = Spielebuch.StoredFunction.save(function(){
+
+         }, 'global');*/
+        return [drop, take];
     }
 });
-
-

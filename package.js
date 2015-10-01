@@ -52,6 +52,24 @@ Package.onUse(function (api) {
     api.addFiles('view/reader_ui.css', 'client');
     api.addFiles('view/reader_ui_global_helper.js', 'client');
 
+    /**
+     * Backpack
+     */
+    api.addFiles('view/backpack/backpack.html', 'client');
+    api.addFiles('view/backpack/backpack.js', 'client');
+
+    /**
+     * Modals
+     */
+    api.addFiles('view/modal/modal.html', 'client');
+    api.addFiles('view/modal/modal.js', 'client');
+
+    /**
+     * Interaction
+     */
+    api.addFiles('view/interaction.js', 'client');
+    api.addFiles('server/methods.js', 'server');
+
 
     if (api.export) {
         api.export('Reader', 'client');

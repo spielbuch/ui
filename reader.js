@@ -54,7 +54,7 @@ Reader.autoupdate = function () {
         if (Session.equals('spielebuchReady', true)) {
             var text = Reader.parseGameobjectText(Session.get('spielebuchText'));
             Session.set('readerText', text);
-            Reader.resetAvtiveGameobject();
+            Reader.resetActiveGameobject();
         } else {
             Session.set('readerText', '');
         }
@@ -66,6 +66,7 @@ Reader.refreshPlayerData = function () {
         if (!Meteor.userId()) {
             return;
         }
+        var player = Spielebuch.player.get();
         Session.set('readerPlayerProperties', player.getPropertiesArray());
         Session.set('readerPlayerEffectNames', player.getEffectNames());
         Session.set('readerPlayerEffects', player.getEffects());
@@ -116,6 +117,8 @@ Reader.setActiveGameobject = function (_id) {
     Session.set('readerObjectRules', gameobject.getRules());
     Session.set('readerObjectName', gameobject.get('name'));
     Session.set('readerObjectId', gameobject.get('_id'));
+
+    return gameobject;
 };
 Reader.resetActiveGameobject = function () {
     Reader.activeGameobject.set(false);
@@ -129,14 +132,6 @@ Reader.resetActiveGameobject = function () {
 };
 Reader.localStorage = new Mongo.Collection(null);
 
-Reader.getBackpack = function(){
-    var player = Spielebuch.player.get();
-    return player.getBackpackList();
-}
 
 
-Reader.modal = function(text, title){
-    Session.set('modalText',text);
-    Session.set('modalTitle',title);
-    $('#modal-trailer').modal();
-};
+

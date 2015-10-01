@@ -1,0 +1,44 @@
+<!--/**
+ * Created by Daniel Budick on 01 Okt 2015.
+ * Copyright 2015 Daniel Budick All rights reserved.
+ * Contact: daniel@budick.eu / http://budick.eu
+ *
+ * This file is part of spielebuch:ui
+ * spielebuch:ui is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * spielebuch:ui is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with spielebuch:ui. If not, see <http://www.gnu.org/licenses/>.
+ */-->
+
+<template name="modal">
+    {{>textModal}}
+    {{>backpackModal}}
+</template>
+
+<template name="textModal">
+    <div class="modal fade" id="modal-text">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{{title}}}</h4>
+                </div>
+                <div class="modal-body">
+                    {{{text}}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Schlie&szlig;en</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
