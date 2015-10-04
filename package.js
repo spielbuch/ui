@@ -33,7 +33,8 @@ Package.onUse(function (api) {
         'underscore',
         'spielebuch:core',
         'accounts-base',
-        'accounts-ui'
+        'accounts-ui',
+        'ecmascript'
     ]);
     api.use(['templating',
         'session',

@@ -78,28 +78,24 @@ Reader.refreshPlayerData = function () {
 
 Reader.parseGameobjectText = function (textarray) {
     var re = /[^[\]]+(?=])/, _id, gameobject, text = '';
+    var gameobject = new Spielebuch.Gameobject(Meteor.userId());
     if (Array.isArray(textarray)) {
-        _.map(textarray, function (textitem) {
-            var foundObject = re.exec(textitem);
+        _.map(textarray, (textarrayItem) => {
+            var textItem = textarrayItem[0];
+            var foundObject = re.exec(textItem);
             if (foundObject !== null) {
                 _id = foundObject[0];
-                gameobject = Spielebuch.Gameobjects.findOne(_id);
-                if (!gameobject) {
-                    Spielebuch.error('404', 'Could not find Gameobject (' + _id + ') in database.');
-                } else {
-                    textitem = textitem.replace(new RegExp('\\[' + _id + '\\]', 'g'),
-                        '<a href=\"#\" class=\"reader-gameobject hover\" ' +
-                        'data-_id=\"' + _id + '\">' + gameobject.name +
-                        '</a>'
-                    );
-                }
+                gameobject.load(_id);
+                textItem = textItem.replace(new RegExp('\\[' + _id + '\\]'),
+                    '<a href=\"#\" class=\"reader-gameobject hover\" ' +
+                    'data-_id=\"' + _id + '\">' + gameobject.get('name') +
+                    '</a>'
+                );
             }
-            text += textitem + ' ';
+            text += textItem + ' ';
         });
-        return text;
     }
-    Spielebuch.error(500, 'Spielebuch.getText() should return an array, but instead returned a ' + typeof textarray + '.');
-    return '';
+    return text;
 };
 
 Reader.activeGameobject = new ReactiveVar(false);
@@ -128,6 +124,9 @@ Reader.resetActiveGameobject = function () {
     Session.set('readerObjectRules', false);
     Session.set('readerObjectName', false);
     Session.set('readerObjectId', false);
+    Session.set('readerRenderIcons', '');
+};
+Reader.resetIcons = function () {
     Session.set('readerRenderIcons', '');
 };
 Reader.localStorage = new Mongo.Collection(null);
