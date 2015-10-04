@@ -75,6 +75,11 @@ Template.registerHelper('readerPlayerName', function () {
 Template.registerHelper('readerPlayerId', function () {
     return Session.get('readerPlayerId');
 });
+
+Template.registerHelper('readerLogs', function () {
+    return Session.get('spielebuchLog');
+});
+
 Template.registerHelper('readerCopyrightNotice', function () {
     return Spielebuch.copyrightNotice;
 });
