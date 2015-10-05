@@ -21,6 +21,14 @@
 Reader = {};
 Reader.init = function () {
 
+    Reader.backpackEvents = [];
+    Meteor.call('createBackpackEventFunctions', function (err, events) {
+        if(err ){
+            Spielebuch.error(500,err);
+        }
+        Reader.backpackEvents = events;
+    });
+
     Session.setDefault('readerText', '');
 
     Session.setDefault('readerObjectProperties', false);
@@ -52,9 +60,9 @@ Reader.autoupdate = function () {
     Reader.refreshPlayerData();
     Tracker.autorun(function () {
         if (Session.equals('spielebuchReady', true)) {
-            var text = Reader.parseGameobjectText(Session.get('spielebuchText'));
+            var text = Reader.parseGameObjectText(Session.get('spielebuchText'));
             Session.set('readerText', text);
-            Reader.resetActiveGameobject();
+            Reader.resetActiveGameObject();
         } else {
             Session.set('readerText', '');
         }
@@ -76,9 +84,9 @@ Reader.refreshPlayerData = function () {
     });
 };
 
-Reader.parseGameobjectText = function (textarray) {
+Reader.parseGameObjectText = function (textarray) {
     var re = /[^[\]]+(?=])/, _id, gameobject, text = '';
-    var gameobject = new Spielebuch.Gameobject(Meteor.userId());
+    var gameobject = new Spielebuch.GameObject(Meteor.userId());
     if (Array.isArray(textarray)) {
         _.map(textarray, (textarrayItem) => {
             var textItem = textarrayItem[0];
@@ -98,15 +106,15 @@ Reader.parseGameobjectText = function (textarray) {
     return text;
 };
 
-Reader.activeGameobject = new ReactiveVar(false);
+Reader.activeGameObject = new ReactiveVar(false);
 
-Reader.setActiveGameobject = function (_id) {
+Reader.setActiveGameObject = function (_id) {
     if (!Meteor.userId()) {
         return;
     }
-    var gameobject = new Spielebuch.Gameobject(Meteor.userId());
+    var gameobject = new Spielebuch.GameObject(Meteor.userId());
     gameobject.load(_id);
-    Reader.activeGameobject.set(gameobject);
+    Reader.activeGameObject.set(gameobject);
     Session.set('readerObjectProperties', gameobject.getPropertiesArray());
     Session.set('readerObjectEffectNames', gameobject.getEffectNames());
     Session.set('readerObjectEffects', gameobject.getEffects());
@@ -116,8 +124,8 @@ Reader.setActiveGameobject = function (_id) {
 
     return gameobject;
 };
-Reader.resetActiveGameobject = function () {
-    Reader.activeGameobject.set(false);
+Reader.resetActiveGameObject = function () {
+    Reader.activeGameObject.set(false);
     Session.set('readerObjectProperties', false);
     Session.set('readerObjectEffectNames', false);
     Session.set('readerObjectEffects', false);

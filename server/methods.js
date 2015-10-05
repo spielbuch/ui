@@ -22,13 +22,26 @@ Meteor.methods({
         var drop = {
             name: 'Drop',
             icon: 'fa-long-arrow-down'
-        }, take = {
+        }, equip = {
             name: 'Equip',
             icon: 'fa-male'
+        }, unequip = {
+            name: 'Unequip',
+            icon: 'fa-long-arrow-down'
         };
-        /*drop.fncId = Spielebuch.StoredFunction.save(function(){
+        drop.fncId = Spielebuch.StoredFunction.save(`
+            player.unequip(self);
+            Meteor.call('dropToScene', self.get('_id'), scene.get('_id'));
+         `, this.userId);
 
-         }, 'global');*/
-        return [drop, take];
+        equip.fncId = Spielebuch.StoredFunction.save(`
+            player.equip(self);
+         `, this.userId);
+
+        unequip.fncId = Spielebuch.StoredFunction.save(`
+            player.unequip(self);
+         `, this.userId);
+
+        return {drop: drop, equip: equip, unequip: unequip};
     }
 });

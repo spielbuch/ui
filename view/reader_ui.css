@@ -38,6 +38,6 @@
 
 .overflow-scroll {
     overflow-y: scroll;
-    height: 200px;
+    height: 50%;
     bottom:0px;
 }

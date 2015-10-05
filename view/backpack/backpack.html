@@ -32,7 +32,7 @@
                 <div class="modal-body">
                     <ul class="backpack">
                         {{#each getBackpack}}
-                        <li><a href="#" class="reader-backpack-item" data-_id="{{_id}}">{{name}}</a></li>
+                        <li><a href="#" class="reader-backpack-item" data-equipped="{{equipped}}" data-_id="{{_id}}">{{name}}</a>{{{backpackSymbol equipped}}}</li>
                         {{/each}}
                     </ul>
                 </div>

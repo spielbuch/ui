@@ -19,56 +19,57 @@
  */
 
 
-    /**
-     * Backpack
-     * every item in backpack has two events:
-     * - use: Element is used
-     * - drop: Element is dropped from backpack
-     */
-    Template.registerHelper('getBackpack', function () {
-        return Reader.getBackpack();
-    });
+/**
+ * Backpack
+ * every item in backpack has two events:
+ * - use: Element is used
+ * - drop: Element is dropped from backpack
+ */
+Template.registerHelper('getBackpack', function () {
+    return Reader.getBackpack();
+});
 
-    /**
-     * Open
-     *
-     */
-    Template.readerBackpack.events({
-        'click .open-backpack': function (event) {
-            $('#modal-backpack').modal();
+Template.registerHelper('backpackSymbol', function (equipped) {
+    if(equipped) {
+        return equipped.value;
+    }
+    return '';
+});
+
+
+/**
+ * Open
+ *
+ */
+Template.readerBackpack.events({
+    'click .open-backpack': function (event) {
+        $('#modal-backpack').modal();
+    }
+});
+
+
+Template.backpackModal.events({
+    'click .reader-backpack-item': function (event) {
+        event.preventDefault();
+        var _id = event.currentTarget.dataset._id, equipped = event.currentTarget.dataset.equipped;
+        if (Session.get('readerObjectId') !== false) {
+            Reader.resetActiveGameObject();
         }
-    });
+        Reader.setActiveGameObject(_id);
 
-
-    Template.backpackModal.events({
-        'click .reader-backpack-item': function (event) {
-            event.preventDefault();
-            var _id = event.currentTarget.dataset._id;
-            if (Session.get('readerObjectId') !== false) {
-                Reader.resetActiveGameobject();
-            }
-            Reader.setActiveGameobject(_id);
-            renderIcons({x: event.clientX, y: event.clientY}, Reader.backpackEvents);
+        if(equipped==='false') {
+            renderIcons({x: event.clientX, y: event.clientY}, [Reader.backpackEvents.drop, Reader.backpackEvents.equip]);
+        }else{
+            renderIcons({x: event.clientX, y: event.clientY}, [Reader.backpackEvents.drop, Reader.backpackEvents.unequip]);
         }
-    });
+    }
+});
 
-    Reader.getBackpack = function () {
-        if (Spielebuch.player.get()) {
-            var player = Spielebuch.player.get();
-            return player.getBackpackList();
-        }
-        return [];
-    };
-
-    Reader.backpackEvents = [];
-    Meteor.startup(function () {
-        Meteor.call('createBackpackEventFunctions', function (err, events) {
-            if(err ){
-                Spielebuch.error(500,err);
-            }
-            Reader.backpackEvents = events;
-        })
-    });
-
-
+Reader.getBackpack = function () {
+    if (Spielebuch.player.get()) {
+        var player = Spielebuch.player.get();
+        return player.getBackpackList();
+    }
+    return [];
+};
 

@@ -22,10 +22,10 @@ Template.readerText.events({
         event.preventDefault();
         var _id = event.currentTarget.dataset._id;
         if (Session.get('readerObjectId') !== false) {
-            Reader.resetActiveGameobject();
+            Reader.resetActiveGameObject();
         }
 
-        var gameobject = Reader.setActiveGameobject(_id);
+        var gameobject = Reader.setActiveGameObject(_id);
         renderIcons({x: event.clientX, y: event.clientY}, gameobject.getEvents());
     }
 });
