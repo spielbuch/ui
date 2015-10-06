@@ -30,7 +30,7 @@ Meteor.methods({
             icon: 'fa-long-arrow-down'
         };
         drop.fncId = Spielebuch.StoredFunction.save(`
-            Meteor.call('dropToScene', self.get('_id'), scene.get('_id'));
+            self.drop();
             player.unequip(self);
          `, this.userId);
 

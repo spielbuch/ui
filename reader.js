@@ -47,6 +47,9 @@ Reader.init = function () {
     Session.setDefault('readerPlayerName', 'Noname');
     Session.setDefault('readerPlayerId', false);
 
+    Session.setDefault('readerEquippedRules', false);
+    Session.setDefault('readerEquippedEffects', false);
+    Session.setDefault('readerEquippedProperties', false);
 
     if (!Spielebuch) {
         throw new Meteor.Error(500, 'Please add package spielebuch:core to your application.');
@@ -75,12 +78,16 @@ Reader.refreshPlayerData = function () {
             return;
         }
         var player = Spielebuch.player.get();
-        Session.set('readerPlayerProperties', player.getPropertiesArray());
-        Session.set('readerPlayerEffectNames', player.getEffectNames());
-        Session.set('readerPlayerEffects', player.getEffects());
-        Session.set('readerPlayerRules', player.getRules());
-        Session.set('readerPlayerName', player.get('name'));
-        Session.set('readerPlayerId', player.get('_id'));
+        if(player) {
+            Session.set('readerPlayerProperties', player.getPropertiesArray());
+            Session.set('readerPlayerEffectNames', player.getEffectNames());
+            Session.set('readerPlayerEffects', player.getEffects());
+            Session.set('readerPlayerRules', player.getRules());
+            Session.set('readerPlayerName', player.get('name'));
+            Session.set('readerPlayerId', player.get('_id'));
+            Session.set('readerEquippedRules', player.getEquippedRules());
+            Session.set('readerEquippedProperties', player.getEquippedProperties());
+        }
     });
 };
 

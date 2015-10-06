@@ -80,10 +80,58 @@ Template.registerHelper('readerPlayerId', function () {
     return Session.get('readerPlayerId');
 });
 
+/**
+ * Helper for players equipment
+ */
+Template.registerHelper('readerEquippedRules', function () {
+    return Session.get('readerEquippedRules');
+});
+Template.registerHelper('readerEquippedEffect', function () {
+    var player = Spielebuch.player.get();
+    if(player) {
+        return player.createEquippedEffect();
+    }
+});
+Template.registerHelper('readerEquippedProperties', function () {
+    return Session.get('readerEquippedProperties');
+});
+
+
+function getEquippedValueByName(name,player){
+    if(!player){
+        return 0;
+    }
+    player.getEquippedValueByName(name);
+}
+Template.registerHelper('readerEquippedPropertyByName', function (name) {
+    var player = Spielebuch.player.get();
+    return getEquippedValueByName(name, player);
+});
+
+/**
+ * Helper to show damage, defense and hitpoints of the player
+ */
+
+
+Template.registerHelper('readerPlayerDamage', function () {
+    var player = Spielebuch.player.get();
+    return getEquippedValueByName(Spielebuch.Gameplay.damage, player);
+});
+Template.registerHelper('readerPlayerDefense', function () {
+    var player = Spielebuch.player.get();
+    return getEquippedValueByName(Spielebuch.Gameplay.defense, player);
+});
+Template.registerHelper('readerPlayerHitpoints', function () {
+    var player = Spielebuch.player.get();
+    return getEquippedValueByName(Spielebuch.Gameplay.hitpoints, player);
+});
+
+/**
+ * Helper for log.
+ */
 Template.registerHelper('readerLogs', function () {
     return Session.get('spielebuchLog');
 });
-
 Template.registerHelper('readerCopyrightNotice', function () {
     return Spielebuch.copyrightNotice;
 });
