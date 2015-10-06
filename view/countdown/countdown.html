@@ -1,0 +1,32 @@
+<template name="readerCountdown">
+    {{#if equals spielbuchCountdownTime -1}}
+    {{else}}
+    <div class="radial-progress" data-progress="{{spielbuchCountdownPercent}}">
+        <div class="circle">
+            <div class="mask full" style="-webkit-transform:
+                -webkit-transform: rotate({{spielbuchCountdownRadialLeft}}deg);
+                -ms-transform: rotate({{spielbuchCountdownRadialLeft}}deg);
+                transform: rotate({{spielbuchCountdownRadialLeft}}deg);">
+                <div class="fill" style="-webkit-transform:
+                -webkit-transform: rotate({{spielbuchCountdownRadialLeft}}deg);
+                -ms-transform: rotate({{spielbuchCountdownRadialLeft}}deg);
+                transform: rotate({{spielbuchCountdownRadialLeft}}deg);"></div>
+            </div>
+
+            <div class="mask half">
+                <div class="fill"  style="-webkit-transform:
+                    -webkit-transform: rotate({{spielbuchCountdownRadialLeft}}deg);
+                    -ms-transform: rotate({{spielbuchCountdownRadialLeft}}deg);
+                    transform: rotate({{spielbuchCountdownRadialLeft}}deg);"></div>
+                <div class="fill fix" style="-webkit-transform:
+                    -webkit-transform: rotate({{spielbuchCountdownRadialRight}}deg);
+                    -ms-transform: rotate({{spielbuchCountdownRadialRight}}deg);
+                    transform: rotate({{spielbuchCountdownRadialRight}}deg);"></div>
+            </div>
+        </div>
+        <div class="inset">
+            <div class="percentage">{{spielbuchCountdownTimeLeft}}s</div>
+        </div>
+    </div>
+    {{/if}}
+</template>

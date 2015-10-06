@@ -29,6 +29,10 @@ Template.registerHelper('readerText', function () {
     return Session.get('readerText');
 });
 
+Template.registerHelper('equals', function (a, b) {
+    return a===b;
+});
+
 Template.registerHelper('readerObjectProperties', function () {
     return Session.get('readerObjectProperties');
 });
@@ -84,4 +88,16 @@ Template.registerHelper('readerCopyrightNotice', function () {
     return Spielebuch.copyrightNotice;
 });
 
+/**
+ * Helper for countdown
+ */
+Template.registerHelper('spielbuchCountdownTime', function () {
+    return Session.get('spielbuchCountdownTime');
+});
+Template.registerHelper('spielbuchCountdownTimeLeft', function () {
+    return Session.get('spielbuchCountdownTimeLeft');
+});
+Template.registerHelper('spielbuchCountdownPercent', function () {
+    return Session.get('spielbuchCountdownPercent');
+});
 

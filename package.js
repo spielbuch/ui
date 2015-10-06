@@ -66,6 +66,13 @@ Package.onUse(function (api) {
     api.addFiles('view/modal/modal.js', 'client');
 
     /**
+     * Countdown
+     */
+    api.addFiles('view/countdown/countdown.html', 'client');
+    api.addFiles('view/countdown/countdown.js', 'client');
+    api.addFiles('view/countdown/countdown.css', 'client');
+
+    /**
      * Interaction
      */
     api.addFiles('view/interaction.js', 'client');
