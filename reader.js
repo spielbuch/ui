@@ -83,7 +83,7 @@ Reader.refreshPlayerData = function () {
             Session.set('readerPlayerEffectNames', player.getEffectNames());
             Session.set('readerPlayerEffects', player.getEffects());
             Session.set('readerPlayerRules', player.getRules());
-            Session.set('readerPlayerName', player.get('name'));
+            Session.set('readerPlayerName', player.getName());
             Session.set('readerPlayerId', player.get('_id'));
             Session.set('readerEquippedRules', player.getEquippedRules());
             Session.set('readerEquippedProperties', player.getEquippedProperties());

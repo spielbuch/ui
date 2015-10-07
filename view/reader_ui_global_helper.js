@@ -111,8 +111,6 @@ Template.registerHelper('readerEquippedPropertyByName', function (name) {
 /**
  * Helper to show damage, defense and hitpoints of the player
  */
-
-
 Template.registerHelper('readerPlayerDamage', function () {
     var player = Spielebuch.player.get();
     return getEquippedValueByName(Spielebuch.Gameplay.damage, player);
