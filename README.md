@@ -1,5 +1,5 @@
 # spielebuch:ui
-This is a ui package for [spielebuch:core](https://github.com/spielebuch/core) a framework to create interactive stories. 
+This is an ui package for [spielebuch:core](https://github.com/spielebuch/core) a framework to create interactive stories. 
 
 # Installation
 - If you speak German, click [here](https://github.com/spielebuch/example-de) if you speak English click [here](https://github.com/spielebuch/example-en).
