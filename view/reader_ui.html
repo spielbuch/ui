@@ -19,12 +19,8 @@
  */-->
 
 <template name="readerText">
-    {{#if currentUser}}
     <div class="reader-text">{{{readerText}}}</div>
     <div class="reader-backpack-btn">{{>readerBackpack}}</div>
-    {{else}}
-    Bitte melden Sie sich an.
-    {{/if}}
     {{> modal}}
 </template>
 

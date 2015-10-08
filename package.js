@@ -20,9 +20,11 @@
 
 Package.describe({
     name: 'spielebuch:ui',
-    summary: '',
+    summary: 'This is a ui package for spielebuch:core a framework to create interactive stories.',
     git: 'https://github.com/spielebuch/ui',
-    version: '0.0.1'
+    documentation: 'readme.md',
+    version: '0.0.2',
+
 });
 
 Package.onUse(function (api) {
@@ -31,7 +33,7 @@ Package.onUse(function (api) {
     api.use([
         'meteor-platform',
         'underscore',
-        'spielebuch:core',
+        'spielebuch:core@0.0.2',
         'accounts-base',
         'accounts-ui',
         'ecmascript'
@@ -42,8 +44,8 @@ Package.onUse(function (api) {
     ], 'client');
 
     api.imply([
-        'spielebuch:core',
-        'fortawesome:fontawesome'
+        'spielebuch:core@0.0.2',
+        'fortawesome:fontawesome@4.4.0'
     ]);
 
     api.addFiles('reader.js', 'client');

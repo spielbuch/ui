@@ -103,6 +103,19 @@ function getEquippedValueByName(name,player){
     }
     player.getEquippedValueByName(name);
 }
+function getValueByName(name,player){
+    if(!player){
+        return 0;
+    }
+    player.getValueByName(name);
+}
+function getEffectiveValueByName(name,player){
+    if(!player){
+        return 0;
+    }
+    player.getEffectiveValueByName(name);
+}
+
 Template.registerHelper('readerEquippedPropertyByName', function (name) {
     var player = Spielebuch.player.get();
     return getEquippedValueByName(name, player);
@@ -123,6 +136,8 @@ Template.registerHelper('readerPlayerHitpoints', function () {
     var player = Spielebuch.player.get();
     return getEquippedValueByName(Spielebuch.Gameplay.hitpoints, player);
 });
+
+
 
 /**
  * Helper for log.
