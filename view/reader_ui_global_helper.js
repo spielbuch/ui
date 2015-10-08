@@ -120,6 +120,14 @@ Template.registerHelper('readerEquippedPropertyByName', function (name) {
     var player = Spielebuch.player.get();
     return getEquippedValueByName(name, player);
 });
+Template.registerHelper('readerPropertyByName', function (name) {
+    var player = Spielebuch.player.get();
+    return getValueByName(name, player);
+});
+Template.registerHelper('readerEffectivePropertyByName', function (name) {
+    var player = Spielebuch.player.get();
+    return getEffectiveValueByName(name, player);
+});
 
 /**
  * Helper to show damage, defense and hitpoints of the player
