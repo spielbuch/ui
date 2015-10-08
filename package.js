@@ -23,7 +23,7 @@ Package.describe({
     summary: 'This is a ui package for spielebuch:core a framework to create interactive stories.',
     git: 'https://github.com/spielebuch/ui',
     documentation: 'readme.md',
-    version: '0.0.4',
+    version: '0.0.5',
 
 });
 

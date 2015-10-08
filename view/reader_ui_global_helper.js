@@ -101,19 +101,19 @@ function getEquippedValueByName(name,player){
     if(!player){
         return 0;
     }
-    player.getEquippedValueByName(name);
+    return player.getEquippedValueByName(name);
 }
 function getValueByName(name,player){
     if(!player){
         return 0;
     }
-    player.getValueByName(name);
+    return player.getValueByName(name);
 }
 function getEffectiveValueByName(name,player){
     if(!player){
         return 0;
     }
-    player.getEffectiveValueByName(name);
+    return player.getEffectiveValueByName(name);
 }
 
 Template.registerHelper('readerEquippedPropertyByName', function (name) {
