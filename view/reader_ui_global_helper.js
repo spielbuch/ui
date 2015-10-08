@@ -126,18 +126,40 @@ Template.registerHelper('readerEquippedPropertyByName', function (name) {
  */
 Template.registerHelper('readerPlayerDamage', function () {
     var player = Spielebuch.player.get();
-    return getEquippedValueByName(Spielebuch.Gameplay.damage, player);
+    return getValueByName(Spielebuch.Gameplay.damage, player);
 });
 Template.registerHelper('readerPlayerDefense', function () {
     var player = Spielebuch.player.get();
-    return getEquippedValueByName(Spielebuch.Gameplay.defense, player);
+    return getValueByName(Spielebuch.Gameplay.defense, player);
 });
 Template.registerHelper('readerPlayerHitpoints', function () {
     var player = Spielebuch.player.get();
+    return getValueByName(Spielebuch.Gameplay.hitpoints, player);
+});
+Template.registerHelper('readerPlayerEquippedDamage', function () {
+    var player = Spielebuch.player.get();
+    return getEquippedValueByName(Spielebuch.Gameplay.damage, player);
+});
+Template.registerHelper('readerPlayerEquippedDefense', function () {
+    var player = Spielebuch.player.get();
+    return getEquippedValueByName(Spielebuch.Gameplay.defense, player);
+});
+Template.registerHelper('readerPlayerEquippedHitpoints', function () {
+    var player = Spielebuch.player.get();
     return getEquippedValueByName(Spielebuch.Gameplay.hitpoints, player);
 });
-
-
+Template.registerHelper('readerPlayerEffectiveDamage', function () {
+    var player = Spielebuch.player.get();
+    return getEffectiveValueByName(Spielebuch.Gameplay.damage, player);
+});
+Template.registerHelper('readerPlayerEffectiveDefense', function () {
+    var player = Spielebuch.player.get();
+    return getEffectiveValueByName(Spielebuch.Gameplay.defense, player);
+});
+Template.registerHelper('readerPlayerEffectiveHitpoints', function () {
+    var player = Spielebuch.player.get();
+    return getEffectiveValueByName(Spielebuch.Gameplay.hitpoints, player);
+});
 
 /**
  * Helper for log.
